@@ -6,6 +6,10 @@ import java.util.Observable;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
@@ -29,10 +33,10 @@ public class DemoKontaktDetailJFrame implements Observer {
 	private JButton saveButton;
 	private JTextField firstNameField;
 	private JTextField emailField;
-	private JLabel firstNameErrorLabel;
 	private JLabel emailErrorLabel;
 	
 	private Contact mContact;
+	private JLabel lblNotes;
 
 	public DemoKontaktDetailJFrame(Contact contact)
 	{
@@ -70,10 +74,6 @@ public class DemoKontaktDetailJFrame implements Observer {
 	private JLabel getNamesErrorLabel()
 	{
 		return namesErrorLabel;
-	}
-	private JLabel getFirstNameErrorLabel()
-	{
-		return firstNameErrorLabel;
 	}
 	private JLabel getEMailErrorLabel()
 	{
@@ -138,9 +138,17 @@ public class DemoKontaktDetailJFrame implements Observer {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 291, 422);
+		frame.setMinimumSize(new Dimension(330, 330));
+		frame.setBounds(100, 100, 330, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{120, 120, 25, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{35, 40, 40, 40, 0, 0, 0, 0, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0};
+		frame.getContentPane().setLayout(gbl_contentPane);
+		
 		
 		FocusListener saveChecker =  new CheckSaveableFocusListener();
 			
@@ -148,33 +156,107 @@ public class DemoKontaktDetailJFrame implements Observer {
 		
 		JLabel lblKontaktDetails = new JLabel("Kontakt Details");
 		lblKontaktDetails.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblKontaktDetails.setBounds(10, 15, 187, 17);
-		frame.getContentPane().add(lblKontaktDetails);
+		GridBagConstraints gbc_lblKontaktDetails = new GridBagConstraints();
+		gbc_lblKontaktDetails.anchor = GridBagConstraints.SOUTHEAST;
+		gbc_lblKontaktDetails.insets = new Insets(0, 0, 5, 5);
+		gbc_lblKontaktDetails.gridx = 0;
+		gbc_lblKontaktDetails.gridy = 0;
+		frame.getContentPane().add(lblKontaktDetails, gbc_lblKontaktDetails);
 		
 		JLabel lblName = new JLabel("Name:");
-		lblName.setBounds(10, 46, 71, 14);
-		frame.getContentPane().add(lblName);
+		GridBagConstraints gbc_lblName = new GridBagConstraints();
+		gbc_lblName.anchor = GridBagConstraints.EAST;
+		gbc_lblName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblName.gridx = 0;
+		gbc_lblName.gridy = 2;
+		frame.getContentPane().add(lblName, gbc_lblName);
 		
 		nameField = new JTextField();
 		nameField.addFocusListener(saveChecker);
-		nameField.setBounds(80, 43, 150, 20);
-		frame.getContentPane().add(nameField);
 		nameField.setColumns(10);
+		GridBagConstraints gbc_nameField = new GridBagConstraints();
+		gbc_nameField.insets = new Insets(0, 0, 5, 5);
+		gbc_nameField.gridx = 1;
+		gbc_nameField.gridy = 2;
+		frame.getContentPane().add(nameField, gbc_nameField);
+		
 
-		namesErrorLabel = new JLabel(new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif")));
+		namesErrorLabel = new JLabel(errorIcon);
 		namesErrorLabel.setToolTipText("Vorname und Nachmame dürfen nicht beide leer sein");
-		namesErrorLabel.setBounds(233, 35, 32, 32);
-		frame.getContentPane().add(namesErrorLabel);
+		GridBagConstraints gbc_namesErrorLabel = new GridBagConstraints();
+		gbc_namesErrorLabel.anchor = GridBagConstraints.WEST;
+		gbc_namesErrorLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_namesErrorLabel.gridx = 2;
+		gbc_namesErrorLabel.gridy = 2;
+		frame.getContentPane().add(namesErrorLabel, gbc_namesErrorLabel);
+		
+		lblNotes = new JLabel("Notes:");
+		GridBagConstraints gbc_lblNotes = new GridBagConstraints();
+		gbc_lblNotes.anchor = GridBagConstraints.NORTHEAST;
+		gbc_lblNotes.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNotes.gridx = 0;
+		gbc_lblNotes.gridy = 5;
+		frame.getContentPane().add(lblNotes, gbc_lblNotes);
+
+		JTextArea notesArea = new JTextArea();
+		notesArea.setColumns(10);
+		notesArea.setRows(5);
+		GridBagConstraints gbc_notesArea = new GridBagConstraints();
+		gbc_notesArea.anchor = GridBagConstraints.NORTH;
+		gbc_notesArea.insets = new Insets(0, 0, 5, 5);
+		gbc_notesArea.gridx = 1;
+		gbc_notesArea.gridy = 5;
+		frame.getContentPane().add(notesArea, gbc_notesArea);
+		
+		firstNameField = new JTextField();
+		firstNameField.addFocusListener(saveChecker);
+		firstNameField.setColumns(10);
+		GridBagConstraints gbc_firstNameField = new GridBagConstraints();
+		gbc_firstNameField.insets = new Insets(0, 0, 5, 5);
+		gbc_firstNameField.gridx = 1;
+		gbc_firstNameField.gridy = 1;
+		frame.getContentPane().add(firstNameField, gbc_firstNameField);
+		
+		JLabel lblVorname = new JLabel("Vorname:");
+		GridBagConstraints gbc_lblVorname = new GridBagConstraints();
+		gbc_lblVorname.anchor = GridBagConstraints.EAST;
+		gbc_lblVorname.insets = new Insets(0, 0, 5, 5);
+		gbc_lblVorname.gridx = 0;
+		gbc_lblVorname.gridy = 1;
+		frame.getContentPane().add(lblVorname, gbc_lblVorname);
+		
+		JLabel lblEmail = new JLabel("eMail:");
+		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
+		gbc_lblEmail.anchor = GridBagConstraints.EAST;
+		gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEmail.gridx = 0;
+		gbc_lblEmail.gridy = 3;
+		frame.getContentPane().add(lblEmail, gbc_lblEmail);
+		
+		emailField = new JTextField();
+		emailField.addFocusListener(saveChecker);
+		emailField.setColumns(10);
+		GridBagConstraints gbc_emailField = new GridBagConstraints();
+		gbc_emailField.insets = new Insets(0, 0, 5, 5);
+		gbc_emailField.gridx = 1;
+		gbc_emailField.gridy = 3;
+		frame.getContentPane().add(emailField, gbc_emailField);
+
+		emailErrorLabel = new JLabel(errorIcon);
+		emailErrorLabel.setToolTipText("eMail Adresse muss gültig sein!");
+		GridBagConstraints gbc_emailErrorLabel = new GridBagConstraints();
+		gbc_emailErrorLabel.anchor = GridBagConstraints.WEST;
+		gbc_emailErrorLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_emailErrorLabel.gridx = 2;
+		gbc_emailErrorLabel.gridy = 3;
+		frame.getContentPane().add(emailErrorLabel, gbc_emailErrorLabel);
+		
 
 		/*
 		 * TODO
 		 * Stuff to fill in
 		 * 
 		 */
-
-		JTextArea notesArea = new JTextArea();
-		notesArea.setBounds(10, 211, 214, 119);
-		frame.getContentPane().add(notesArea);
 		
 		saveButton = new JButton("Save");
 		saveButton.addActionListener(new ActionListener() {
@@ -182,38 +264,12 @@ public class DemoKontaktDetailJFrame implements Observer {
 				System.out.println("Saved record for: "+getNameField().getText()+" "+getFirstNameField().getText());
 			}
 		});
-		saveButton.setBounds(10, 350, 89, 23);
-		frame.getContentPane().add(saveButton);
-		
-		firstNameField = new JTextField();
-		firstNameField.addFocusListener(saveChecker);
-		firstNameField.setBounds(80, 72, 150, 20);
-		frame.getContentPane().add(firstNameField);
-		firstNameField.setColumns(10);
-		
-		JLabel lblVorname = new JLabel("Vorname:");
-		lblVorname.setBounds(10, 75, 71, 14);
-		frame.getContentPane().add(lblVorname);
-		
-		JLabel lblEmail = new JLabel("eMail:");
-		lblEmail.setBounds(10, 106, 71, 14);
-		frame.getContentPane().add(lblEmail);
-		
-		emailField = new JTextField();
-		emailField.addFocusListener(saveChecker);
-		emailField.setBounds(80, 103, 150, 20);
-		frame.getContentPane().add(emailField);
-		emailField.setColumns(10);
-		
-		firstNameErrorLabel = new JLabel("New label");
-		firstNameErrorLabel.setIcon(new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif")));
-		firstNameErrorLabel.setBounds(233, 66, 32, 32);
-		frame.getContentPane().add(firstNameErrorLabel);
-		
-		emailErrorLabel = new JLabel("New label");
-		emailErrorLabel.setIcon(new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif")));
-		emailErrorLabel.setBounds(233, 97, 32, 32);
-		frame.getContentPane().add(emailErrorLabel);
+		GridBagConstraints gbc_saveButton = new GridBagConstraints();
+		gbc_saveButton.anchor = GridBagConstraints.WEST;
+		gbc_saveButton.insets = new Insets(0, 0, 5, 5);
+		gbc_saveButton.gridx = 2;
+		gbc_saveButton.gridy = 7;
+		frame.getContentPane().add(saveButton, gbc_saveButton);
 		
 	}
 	
@@ -221,11 +277,9 @@ public class DemoKontaktDetailJFrame implements Observer {
 	private boolean hasAtLeastOneName () {
 		if (getNameField().getText().equals("") && getFirstNameField().getText().equals("")){
 			getNamesErrorLabel().setVisible(true);
-			getFirstNameErrorLabel().setVisible(true);
 			return false;
 		} else {
 			getNamesErrorLabel().setVisible(false);
-			getFirstNameErrorLabel().setVisible(false);
 			return true;			
 		}
 	}
