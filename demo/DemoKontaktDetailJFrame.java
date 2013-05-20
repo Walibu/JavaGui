@@ -27,9 +27,9 @@ public class DemoKontaktDetailJFrame implements Observer {
 	private JTextField nameField;	
 	private JLabel namesErrorLabel;
 	private JButton saveButton;
-	private JTextField vornameField;
+	private JTextField firstNameField;
 	private JTextField emailField;
-	private JLabel vornameErrorLabel;
+	private JLabel firstNameErrorLabel;
 	private JLabel emailErrorLabel;
 	
 	private Contact mContact;
@@ -40,14 +40,6 @@ public class DemoKontaktDetailJFrame implements Observer {
 		initialize();
 	}
 	
-	public void update(Observable object, Object arg)
-	{
-		vornameField.setText(mContact.getFirstName());
-		nameField.setText(mContact.getName());
-		emailField.setText(mContact.geteMail());
-		System.out.println("Update" + arg);
-	}
-	
 	// TODO Map your JTextFields to the internal names
 	private JTextField getNameField()
 	{
@@ -55,7 +47,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 	}
 	private JTextField getFirstNameField()
 	{
-		return vornameField;
+		return firstNameField;
 	}
 	private JTextField getEMailField()
 	{
@@ -79,9 +71,9 @@ public class DemoKontaktDetailJFrame implements Observer {
 	{
 		return namesErrorLabel;
 	}
-	private JLabel getVornameErrorLabel()
+	private JLabel getFirstNameErrorLabel()
 	{
-		return vornameErrorLabel;
+		return firstNameErrorLabel;
 	}
 	private JLabel getEMailErrorLabel()
 	{
@@ -117,6 +109,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 				try {
 					DemoKontaktDetailJFrame window = new DemoKontaktDetailJFrame(contact);
 					window.frame.setVisible(true);
+					window.frame.setLocation(100, 100);
 					contact.addObserver(window);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -124,6 +117,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 				try {
 					DemoKontaktDetailJFrame window2 = new DemoKontaktDetailJFrame(contact);
 					window2.frame.setVisible(true);
+					window2.frame.setLocation(500, 100);
 					contact.addObserver(window2);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -148,13 +142,13 @@ public class DemoKontaktDetailJFrame implements Observer {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		FocusListener saveCecker =  new CheckSaveableFocusListener();
+		FocusListener saveChecker =  new CheckSaveableFocusListener();
 			
 		ImageIcon errorIcon = new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif"));
 		
 		JLabel lblKontaktDetails = new JLabel("Kontakt Details");
 		lblKontaktDetails.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblKontaktDetails.setBounds(10, 15, 100, 17);
+		lblKontaktDetails.setBounds(10, 15, 187, 17);
 		frame.getContentPane().add(lblKontaktDetails);
 		
 		JLabel lblName = new JLabel("Name:");
@@ -162,14 +156,14 @@ public class DemoKontaktDetailJFrame implements Observer {
 		frame.getContentPane().add(lblName);
 		
 		nameField = new JTextField();
-		nameField.addFocusListener(saveCecker);
+		nameField.addFocusListener(saveChecker);
 		nameField.setBounds(80, 43, 150, 20);
 		frame.getContentPane().add(nameField);
 		nameField.setColumns(10);
 
-		namesErrorLabel = new JLabel(errorIcon);
-		namesErrorLabel.setToolTipText("Vorname und Nachmame d�rfen nicht beide l sein");
-		namesErrorLabel.setBounds(233, 31, 32, 32);
+		namesErrorLabel = new JLabel(new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif")));
+		namesErrorLabel.setToolTipText("Vorname und Nachmame dürfen nicht beide leer sein");
+		namesErrorLabel.setBounds(233, 35, 32, 32);
 		frame.getContentPane().add(namesErrorLabel);
 
 		/*
@@ -191,11 +185,11 @@ public class DemoKontaktDetailJFrame implements Observer {
 		saveButton.setBounds(10, 350, 89, 23);
 		frame.getContentPane().add(saveButton);
 		
-		vornameField = new JTextField();
-		vornameField.addFocusListener(saveCecker);
-		vornameField.setBounds(80, 72, 150, 20);
-		frame.getContentPane().add(vornameField);
-		vornameField.setColumns(10);
+		firstNameField = new JTextField();
+		firstNameField.addFocusListener(saveChecker);
+		firstNameField.setBounds(80, 72, 150, 20);
+		frame.getContentPane().add(firstNameField);
+		firstNameField.setColumns(10);
 		
 		JLabel lblVorname = new JLabel("Vorname:");
 		lblVorname.setBounds(10, 75, 71, 14);
@@ -206,23 +200,20 @@ public class DemoKontaktDetailJFrame implements Observer {
 		frame.getContentPane().add(lblEmail);
 		
 		emailField = new JTextField();
-		emailField.addFocusListener(saveCecker);
+		emailField.addFocusListener(saveChecker);
 		emailField.setBounds(80, 103, 150, 20);
 		frame.getContentPane().add(emailField);
 		emailField.setColumns(10);
 		
-		vornameErrorLabel = new JLabel("New label");
-		vornameErrorLabel.setIcon(new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/javax/swing/plaf/metal/icons/ocean/error.png")));
-		vornameErrorLabel.setBounds(233, 66, 32, 32);
-		frame.getContentPane().add(vornameErrorLabel);
+		firstNameErrorLabel = new JLabel("New label");
+		firstNameErrorLabel.setIcon(new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif")));
+		firstNameErrorLabel.setBounds(233, 66, 32, 32);
+		frame.getContentPane().add(firstNameErrorLabel);
 		
 		emailErrorLabel = new JLabel("New label");
-		emailErrorLabel.setIcon(new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/javax/swing/plaf/metal/icons/ocean/error.png")));
+		emailErrorLabel.setIcon(new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif")));
 		emailErrorLabel.setBounds(233, 97, 32, 32);
 		frame.getContentPane().add(emailErrorLabel);
-		
-		// add Observer
-		//mContact.addObserver(this);
 		
 	}
 	
@@ -230,17 +221,11 @@ public class DemoKontaktDetailJFrame implements Observer {
 	private boolean hasAtLeastOneName () {
 		if (getNameField().getText().equals("") && getFirstNameField().getText().equals("")){
 			getNamesErrorLabel().setVisible(true);
-			getVornameErrorLabel().setVisible(true);
+			getFirstNameErrorLabel().setVisible(true);
 			return false;
-		} else if (getNameField().getText().equals("")){
-			getNamesErrorLabel().setVisible(true);
-			return false;
-		} else if (getFirstNameField().getText().equals("")){
-			getVornameErrorLabel().setVisible(true);
-			return false;	
 		} else {
 			getNamesErrorLabel().setVisible(false);
-			getVornameErrorLabel().setVisible(false);
+			getFirstNameErrorLabel().setVisible(false);
 			return true;			
 		}
 	}
@@ -266,7 +251,24 @@ public class DemoKontaktDetailJFrame implements Observer {
 		}
 	}
 
+	
+	public void update(Observable object, Object arg)
+	{
+		nameField.setText(mContact.getName());
+		firstNameField.setText(mContact.getFirstName());
+		emailField.setText(mContact.getEMail());
+		
+		hasAtLeastOneName();
+		isValidEmail();
+		checkSaveable();
+	}
+	
 	private void checkSaveable() {
+		
+		mContact.setName(getNameField().getText());
+		mContact.setFirstName(getFirstNameField().getText());
+		mContact.setEMail(getEMailField().getText());
+		
 		Boolean isOk = hasAtLeastOneName();
 		isOk = isValidEmail() && isOk;
 		//isOk = validOffTelNr() && isOk;
@@ -276,8 +278,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		if (isOk) {
 			saveButton.setToolTipText("Save");
 			saveButton.setEnabled(true);
-			mContact.setFirstName(getFirstNameField().getText());
-		}else{
+		} else {
 			saveButton.setToolTipText("Remove Errors before Saving");
 			saveButton.setEnabled(false);		
 		}

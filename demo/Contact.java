@@ -30,10 +30,10 @@ public class Contact extends Observable  { // is Observable  and not Observer
 			forceNotify();
 		}
 	}
-	public String geteMail() {
+	public String getEMail() {
 		return eMail;
 	}
-	public void seteMail(String newEMail) {
+	public void setEMail(String newEMail) {
 		if (newEMail!=null && !newEMail.equals(eMail)){
 			this.eMail = newEMail;
 			forceNotify();
