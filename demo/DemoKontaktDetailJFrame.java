@@ -258,19 +258,21 @@ public class DemoKontaktDetailJFrame implements Observer {
 		firstNameField.setText(mContact.getFirstName());
 		emailField.setText(mContact.getEMail());
 		
-		hasAtLeastOneName();
-		isValidEmail();
 		checkSaveable();
 	}
 	
 	private void checkSaveable() {
-		
-		mContact.setName(getNameField().getText());
-		mContact.setFirstName(getFirstNameField().getText());
-		mContact.setEMail(getEMailField().getText());
-		
 		Boolean isOk = hasAtLeastOneName();
+		
+		if (isOk) {
+			mContact.setName(getNameField().getText());
+			mContact.setFirstName(getFirstNameField().getText());
+		}
 		isOk = isValidEmail() && isOk;
+		
+		if (isOk) {
+			mContact.setEMail(getEMailField().getText());
+		}
 		//isOk = validOffTelNr() && isOk;
 		//isOk = validMobileTelNr() && isOk;  //TODO
 		//isOk = validBirthDate() && isOk; //TODO
