@@ -23,6 +23,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.border.CompoundBorder;
 
 
 public class DemoKontaktDetailJFrame implements Observer {
@@ -143,9 +146,9 @@ public class DemoKontaktDetailJFrame implements Observer {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{120, 120, 25, 0, 0, 0};
+		gbl_contentPane.columnWidths = new int[]{120, 130, 25, 0, 0, 0};
 		gbl_contentPane.rowHeights = new int[]{35, 40, 40, 40, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWeights = new double[]{1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0};
 		frame.getContentPane().setLayout(gbl_contentPane);
 		
@@ -172,6 +175,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		frame.getContentPane().add(lblName, gbc_lblName);
 		
 		nameField = new JTextField();
+		nameField.setMinimumSize(new Dimension(120, 20));
 		nameField.addFocusListener(saveChecker);
 		nameField.setColumns(10);
 		GridBagConstraints gbc_nameField = new GridBagConstraints();
@@ -199,7 +203,10 @@ public class DemoKontaktDetailJFrame implements Observer {
 		frame.getContentPane().add(lblNotes, gbc_lblNotes);
 
 		JTextArea notesArea = new JTextArea();
-		notesArea.setColumns(10);
+		notesArea.setMinimumSize(new Dimension(120, 40));
+		notesArea.setMaximumSize(new Dimension(120, 70));
+		notesArea.setLineWrap(true);
+		notesArea.setBorder(new CompoundBorder(new CompoundBorder(), new CompoundBorder()));
 		notesArea.setRows(5);
 		GridBagConstraints gbc_notesArea = new GridBagConstraints();
 		gbc_notesArea.anchor = GridBagConstraints.NORTH;
@@ -209,6 +216,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		frame.getContentPane().add(notesArea, gbc_notesArea);
 		
 		firstNameField = new JTextField();
+		firstNameField.setMinimumSize(new Dimension(120, 20));
 		firstNameField.addFocusListener(saveChecker);
 		firstNameField.setColumns(10);
 		GridBagConstraints gbc_firstNameField = new GridBagConstraints();
@@ -234,6 +242,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		frame.getContentPane().add(lblEmail, gbc_lblEmail);
 		
 		emailField = new JTextField();
+		emailField.setMinimumSize(new Dimension(120, 20));
 		emailField.addFocusListener(saveChecker);
 		emailField.setColumns(10);
 		GridBagConstraints gbc_emailField = new GridBagConstraints();
@@ -259,6 +268,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		 */
 		
 		saveButton = new JButton("Save");
+		saveButton.setEnabled(false);
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Saved record for: "+getNameField().getText()+" "+getFirstNameField().getText());
@@ -336,7 +346,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 			saveButton.setEnabled(true);
 		} else {
 			saveButton.setToolTipText("Remove Errors before Saving");
-			saveButton.setEnabled(false);		
+			saveButton.setEnabled(false);
 		}
 	}
 	
