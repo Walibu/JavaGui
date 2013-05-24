@@ -21,6 +21,7 @@ public class Contact extends Observable  { // is Observable  and not Observer
 			forceNotify();
 		}
 	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -30,6 +31,7 @@ public class Contact extends Observable  { // is Observable  and not Observer
 			forceNotify();
 		}
 	}
+	
 	public String getEMail() {
 		return eMail;
 	}
@@ -39,6 +41,7 @@ public class Contact extends Observable  { // is Observable  and not Observer
 			forceNotify();
 		}
 	}
+	
 	public String getTelOffice() {
 		return telOffice;
 	}
@@ -48,6 +51,27 @@ public class Contact extends Observable  { // is Observable  and not Observer
 			forceNotify();
 		}
 	}
+	
+	public String getTelMobile() {
+		return telMobil;
+	}
+	public void setTelMobile(String newTelMObile) {
+		if (newTelMObile!=null && !newTelMObile.equals(telMobil)){
+			this.telMobil = newTelMObile;
+			forceNotify();
+		}
+	}
+	
+	public String getBirthDay() {
+		return birthDay;
+	}
+	public void setBirthDay(String newBirthDay) {
+		if (newBirthDay!=null && !newBirthDay.equals(birthDay)){
+			this.birthDay = newBirthDay;
+			forceNotify();
+		}
+	}
+	
 	public void forceNotify() {
 		System.out.println("Notify");
 		setChanged();
