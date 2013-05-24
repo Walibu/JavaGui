@@ -30,7 +30,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.SwingConstants;
 
 
-public class DemoKontaktDetailJFrame implements Observer {
+public class ContactDetailJFrame implements Observer {
 
 	private JFrame frame;
 	private JTextField nameField;	
@@ -53,12 +53,11 @@ public class DemoKontaktDetailJFrame implements Observer {
 	private JLabel birthdayErrorLabel;
 	private JTextArea notesArea;
 
-	public DemoKontaktDetailJFrame(Contact contact)
+	public ContactDetailJFrame(Contact contact)
 	{
 		mContact = contact;
 		initialize();
 	}
-	
 	private JTextField getNameField()
 	{
 		return nameField;
@@ -108,9 +107,6 @@ public class DemoKontaktDetailJFrame implements Observer {
 		return notesArea;
 	}
 
-
-
-	
 	/**
 	 * Launch the application.
 	 */
@@ -121,7 +117,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 				Contact contact = new Contact();
 
 				try {
-					DemoKontaktDetailJFrame window = new DemoKontaktDetailJFrame(contact);
+					ContactDetailJFrame window = new ContactDetailJFrame(contact);
 					window.frame.setVisible(true);
 					window.frame.setLocation(100, 100);
 					contact.addObserver(window);
@@ -129,7 +125,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 					e.printStackTrace();
 				}
 				try {
-					DemoKontaktDetailJFrame window2 = new DemoKontaktDetailJFrame(contact);
+					ContactDetailJFrame window2 = new ContactDetailJFrame(contact);
 					window2.frame.setVisible(true);
 					window2.frame.setLocation(500, 100);
 					contact.addObserver(window2);
@@ -143,7 +139,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 	/**
 	 * Create the application.
 	 */
-	public DemoKontaktDetailJFrame() {
+	public ContactDetailJFrame() {
 		initialize();
 	}
 
@@ -159,7 +155,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		FocusListener saveChecker =  new CheckSaveableFocusListener();
 		KeyListener validChecker = new CheckSaveableKeyEventListener();
 			
-		ImageIcon errorIcon = new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif"));
+		ImageIcon errorIcon = new ImageIcon(ContactDetailJFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif"));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{10, 104, 120, 68, 10, 0};
 		gridBagLayout.rowHeights = new int[]{35, 25, 38, 38, 38, 38, 38, 0, 75, 0, 35, 0};
@@ -279,7 +275,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		gbc_phoneErrorLabel.gridy = 4;
 		frame.getContentPane().add(phoneErrorLabel, gbc_phoneErrorLabel);
 		
-		lblTelMobile = new JLabel("Tel. Mobile:");
+		lblTelMobile = new JLabel("Tel. Mobil:");
 		GridBagConstraints gbc_lblTelMobile = new GridBagConstraints();
 		gbc_lblTelMobile.anchor = GridBagConstraints.EAST;
 		gbc_lblTelMobile.insets = new Insets(0, 0, 5, 5);
@@ -431,14 +427,31 @@ public class DemoKontaktDetailJFrame implements Observer {
 	
 	public void update(Observable object, Object arg)
 	{
-		nameField.setText(mContact.getName());
-		firstNameField.setText(mContact.getFirstName());
-		emailField.setText(mContact.getEMail());
-		phoneField.setText(mContact.getTelOffice());
-		mobilePhoneField.setText(mContact.getTelMobile());
-		birthdayField.setText(mContact.getBirthDay());
-		notesArea.setText(mContact.getNotes());
+		// update only the fields which have changed on the event calling this update
+		// otherwise not valid fields will be deleted when changing some other valid fields
 		
+		if (arg.toString().equals("name")) {
+			nameField.setText(mContact.getName());
+		}
+		if (arg.toString().equals("firstName")) {
+			firstNameField.setText(mContact.getFirstName());
+		}
+		if (arg.toString().equals("eMail")) {
+			emailField.setText(mContact.getEMail());
+		}
+		if (arg.toString().equals("telOffice")) {
+			phoneField.setText(mContact.getTelOffice());
+		}
+		if (arg.toString().equals("telMobil")) {
+			mobilePhoneField.setText(mContact.getTelMobile());
+		}
+		if (arg.toString().equals("birthDay")) {
+			birthdayField.setText(mContact.getBirthDay());
+		}
+		if (arg.toString().equals("notes")) {
+			notesArea.setText(mContact.getNotes());
+		}
+
 		checkSaveable();
 	}
 	
@@ -469,7 +482,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		if (validBirthDate()) {
 			mContact.setBirthDay(getBirthDayField().getText());
 		}
-		// no validation of notes
+		// no validation of notes, just set mContact
 		mContact.setNotes(getNotesArea().getText());
 		
 		if (isOk) {
@@ -490,6 +503,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 	}
 	
 	private class CheckSaveableKeyEventListener extends KeyAdapter {
+		@Override
 		public void keyReleased(KeyEvent arg0) {
 			checkSaveable();
 		}

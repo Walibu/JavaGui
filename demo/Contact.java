@@ -19,7 +19,7 @@ public class Contact extends Observable  { // is Observable  and not Observer
 	public void setName(String newName) {
 		if (newName!=null && !newName.equals(name)){
 			this.name = newName;
-			forceNotify();
+			forceNotify("name");
 		}
 	}
 	
@@ -29,7 +29,7 @@ public class Contact extends Observable  { // is Observable  and not Observer
 	public void setFirstName(String newFirstName) {
 		if (newFirstName!=null && !newFirstName.equals(firstName)){
 			this.firstName = newFirstName;
-			forceNotify();
+			forceNotify("firstName");
 		}
 	}
 	
@@ -39,7 +39,7 @@ public class Contact extends Observable  { // is Observable  and not Observer
 	public void setEMail(String newEMail) {
 		if (newEMail!=null && !newEMail.equals(eMail)){
 			this.eMail = newEMail;
-			forceNotify();
+			forceNotify("eMail");
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class Contact extends Observable  { // is Observable  and not Observer
 	public void setTelOffice(String newTelOffice) {
 		if (newTelOffice!=null && !newTelOffice.equals(telOffice)){
 			this.telOffice = newTelOffice;
-			forceNotify();
+			forceNotify("telOffice");
 		}
 	}
 	
@@ -59,7 +59,7 @@ public class Contact extends Observable  { // is Observable  and not Observer
 	public void setTelMobile(String newTelMObile) {
 		if (newTelMObile!=null && !newTelMObile.equals(telMobil)){
 			this.telMobil = newTelMObile;
-			forceNotify();
+			forceNotify("telMobil");
 		}
 	}
 	
@@ -69,14 +69,14 @@ public class Contact extends Observable  { // is Observable  and not Observer
 	public void setBirthDay(String newBirthDay) {
 		if (newBirthDay!=null && !newBirthDay.equals(birthDay)){
 			this.birthDay = newBirthDay;
-			forceNotify();
+			forceNotify("birthDay");
 		}
 	}
 	
 	public void setNotes(String newNotes) {
 		if (newNotes!=null && !newNotes.equals(notes)){
 			this.notes = newNotes;
-			forceNotify();
+			forceNotify("notes");
 		}
 	}
 	
@@ -84,10 +84,10 @@ public class Contact extends Observable  { // is Observable  and not Observer
 		return notes;
 	}
 	
-	public void forceNotify() {
+	public void forceNotify(String fieldName) {
 		System.out.println("Notify");
 		setChanged();
-		notifyObservers();
+		notifyObservers(fieldName);
 	}
 	
 }
