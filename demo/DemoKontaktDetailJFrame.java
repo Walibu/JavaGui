@@ -23,6 +23,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.border.CompoundBorder;
 import javax.swing.SwingConstants;
 
@@ -154,6 +157,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		FocusListener saveChecker =  new CheckSaveableFocusListener();
+		KeyListener validChecker = new CheckSaveableKeyEventListener();
 			
 		ImageIcon errorIcon = new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif"));
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -165,6 +169,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		
 		firstNameField = new JTextField();
 		firstNameField.addFocusListener(saveChecker);
+		firstNameField.addKeyListener(validChecker);
 		
 		JLabel lblKontaktDetails = new JLabel("Kontakt Details");
 		lblKontaktDetails.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -200,6 +205,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 				
 		nameField = new JTextField();
 		nameField.addFocusListener(saveChecker);
+		nameField.addKeyListener(validChecker);
 		nameField.setColumns(10);
 		GridBagConstraints gbc_nameField = new GridBagConstraints();
 		gbc_nameField.fill = GridBagConstraints.HORIZONTAL;
@@ -227,6 +233,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		
 		emailField = new JTextField();
 		emailField.addFocusListener(saveChecker);
+		emailField.addKeyListener(validChecker);
 		emailField.setColumns(10);
 		GridBagConstraints gbc_emailField = new GridBagConstraints();
 		gbc_emailField.fill = GridBagConstraints.HORIZONTAL;
@@ -254,6 +261,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		
 		phoneField = new JTextField();
 		phoneField.addFocusListener(saveChecker);
+		phoneField.addKeyListener(validChecker);
 		GridBagConstraints gbc_phoneField = new GridBagConstraints();
 		gbc_phoneField.insets = new Insets(0, 0, 5, 5);
 		gbc_phoneField.fill = GridBagConstraints.HORIZONTAL;
@@ -281,6 +289,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		
 		mobilePhoneField = new JTextField();
 		mobilePhoneField.addFocusListener(saveChecker);
+		mobilePhoneField.addKeyListener(validChecker);
 		GridBagConstraints gbc_mobilePhoneField = new GridBagConstraints();
 		gbc_mobilePhoneField.insets = new Insets(0, 0, 5, 5);
 		gbc_mobilePhoneField.fill = GridBagConstraints.HORIZONTAL;
@@ -309,6 +318,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		
 		birthdayField = new JTextField();
 		birthdayField.addFocusListener(saveChecker);
+		birthdayField.addKeyListener(validChecker);
 		GridBagConstraints gbc_birthdayField = new GridBagConstraints();
 		gbc_birthdayField.insets = new Insets(0, 0, 5, 5);
 		gbc_birthdayField.fill = GridBagConstraints.HORIZONTAL;
@@ -336,6 +346,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 
 		notesArea = new JTextArea();
 		notesArea.addFocusListener(saveChecker);
+		notesArea.addKeyListener(validChecker);
 		notesArea.setMinimumSize(new Dimension(120, 40));
 		notesArea.setMaximumSize(new Dimension(120, 70));
 		notesArea.setLineWrap(true);
@@ -475,6 +486,12 @@ public class DemoKontaktDetailJFrame implements Observer {
 		@Override
 		public void focusLost(FocusEvent arg0) {
 			checkSaveable();
-		}	
+		}
+	}
+	
+	private class CheckSaveableKeyEventListener extends KeyAdapter {
+		public void keyReleased(KeyEvent arg0) {
+			checkSaveable();
+		}
 	}
 }
