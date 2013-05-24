@@ -10,6 +10,7 @@ public class Contact extends Observable  { // is Observable  and not Observer
 	String telOffice="";
 	String telMobil="";
 	String birthDay="";
+	String notes="";
 	
 
 	public String getName() {
@@ -70,6 +71,17 @@ public class Contact extends Observable  { // is Observable  and not Observer
 			this.birthDay = newBirthDay;
 			forceNotify();
 		}
+	}
+	
+	public void setNotes(String newNotes) {
+		if (newNotes!=null && !newNotes.equals(notes)){
+			this.notes = newNotes;
+			forceNotify();
+		}
+	}
+	
+	public String getNotes() {
+		return notes;
 	}
 	
 	public void forceNotify() {

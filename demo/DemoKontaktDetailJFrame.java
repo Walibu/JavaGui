@@ -48,6 +48,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 	private JLabel mobilePhoneErrorLabel;
 	private JTextField birthdayField;
 	private JLabel birthdayErrorLabel;
+	private JTextArea notesArea;
 
 	public DemoKontaktDetailJFrame(Contact contact)
 	{
@@ -91,15 +92,17 @@ public class DemoKontaktDetailJFrame implements Observer {
 	{
 		return phoneErrorLabel;
 	}
-	
 	private JLabel getTelMobileErrorLabel()
 	{
 		return mobilePhoneErrorLabel;
 	}	
-	
 	private JLabel getBirthDayErrorLabel()
 	{
 		return birthdayErrorLabel;
+	}
+	private JTextArea getNotesArea()
+	{
+		return notesArea;
 	}
 
 
@@ -155,7 +158,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		ImageIcon errorIcon = new ImageIcon(DemoKontaktDetailJFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif"));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{10, 104, 120, 68, 10, 0};
-		gridBagLayout.rowHeights = new int[]{25, 25, 32, 32, 32, 32, 32, 0, 75, 0, 35, 0};
+		gridBagLayout.rowHeights = new int[]{35, 25, 38, 38, 38, 38, 38, 0, 75, 0, 35, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
@@ -166,7 +169,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		JLabel lblKontaktDetails = new JLabel("Kontakt Details");
 		lblKontaktDetails.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GridBagConstraints gbc_lblKontaktDetails = new GridBagConstraints();
-		gbc_lblKontaktDetails.anchor = GridBagConstraints.SOUTHEAST;
+		gbc_lblKontaktDetails.anchor = GridBagConstraints.ABOVE_BASELINE_TRAILING;
 		gbc_lblKontaktDetails.insets = new Insets(0, 0, 5, 5);
 		gbc_lblKontaktDetails.gridx = 1;
 		gbc_lblKontaktDetails.gridy = 0;
@@ -288,6 +291,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		
 		mobilePhoneErrorLabel = new JLabel(errorIcon);
 		mobilePhoneErrorLabel.setToolTipText("Telefonnummer muss gültig sein!");
+		mobilePhoneErrorLabel.setVisible(false);
 		GridBagConstraints gbc_mobilePhoneErrorLabel = new GridBagConstraints();
 		gbc_mobilePhoneErrorLabel.anchor = GridBagConstraints.WEST;
 		gbc_mobilePhoneErrorLabel.insets = new Insets(0, 0, 5, 5);
@@ -330,7 +334,8 @@ public class DemoKontaktDetailJFrame implements Observer {
 		gbc_lblNotes.gridy = 8;
 		frame.getContentPane().add(lblNotes, gbc_lblNotes);
 
-		JTextArea notesArea = new JTextArea();
+		notesArea = new JTextArea();
+		notesArea.addFocusListener(saveChecker);
 		notesArea.setMinimumSize(new Dimension(120, 40));
 		notesArea.setMaximumSize(new Dimension(120, 70));
 		notesArea.setLineWrap(true);
@@ -421,6 +426,7 @@ public class DemoKontaktDetailJFrame implements Observer {
 		phoneField.setText(mContact.getTelOffice());
 		mobilePhoneField.setText(mContact.getTelMobile());
 		birthdayField.setText(mContact.getBirthDay());
+		notesArea.setText(mContact.getNotes());
 		
 		checkSaveable();
 	}
@@ -452,6 +458,8 @@ public class DemoKontaktDetailJFrame implements Observer {
 		if (validBirthDate()) {
 			mContact.setBirthDay(getBirthDayField().getText());
 		}
+		// no validation of notes
+		mContact.setNotes(getNotesArea().getText());
 		
 		if (isOk) {
 			saveButton.setToolTipText("Save");
